@@ -22,6 +22,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
+          MYSQL_USER: root
           MYSQL_ROOT_PASSWORD: sqlpassword
           MYSQL_DATABASE: mygo
         ports:
@@ -46,6 +47,14 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
+
+      - name: 等待 MySQL 服务就绪
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -ppassword --silent; do
+            sleep 1
+          done
 
       - name: 编译与运行
         env:
