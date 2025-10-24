@@ -22,7 +22,6 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_USER: root
           MYSQL_ROOT_PASSWORD: sqlpassword
           MYSQL_DATABASE: mygo
         ports:
