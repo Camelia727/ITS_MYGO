@@ -1,3 +1,17 @@
 spring:
   application:
     name: MY_Goal_Optimizer
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  profiles:
+    active: secret
+
+server:
+  port: 8080
