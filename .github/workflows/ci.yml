@@ -18,22 +18,48 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: sqlpassword
+          MYSQL_DATABASE: mygo
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: 检出代码
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - name: 设置JDK
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - uses: actions/cache@v4
+      - name: 下载依赖
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
-      - run: mvn clean package -DskipTests
+      - name: 等待 MySQL 服务就绪
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -ppassword --silent; do
+            sleep 1
+          done
 
-      - run: mvn test
+      - name: 编译与运行
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mygo?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: sqlpassword
+        run: |
+          mvn clean package -DskipTests
+          mvn test
