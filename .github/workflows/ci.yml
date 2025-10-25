@@ -52,15 +52,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y mysql-client
           
-          while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -ppassword --silent; do
+          while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -p"sqlpassword" --silent; do
             sleep 1
           done
+          echo "MySQL已就绪"
 
       - name: 编译与运行
-        env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mygo?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-          SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD: sqlpassword
         run: |
           mvn clean package -DskipTests
           mvn test
