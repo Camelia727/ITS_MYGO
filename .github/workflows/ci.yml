@@ -47,11 +47,14 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
-      - name: 启用 MySQL 服务
-        uses: actions/actions-setup-mysql@v1
-        with:
-          mysql-version: '8.0'
-          root-password: 'sqlpassword'
+      - name: 等待 MySQL 服务就绪
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          
+          while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -ppassword --silent; do
+            sleep 1
+          done
 
       - name: 编译与运行
         env:
