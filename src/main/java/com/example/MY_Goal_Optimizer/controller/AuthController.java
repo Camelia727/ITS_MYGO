@@ -1,10 +1,10 @@
 package com.example.MY_Goal_Optimizer.controller;
 
 import com.example.MY_Goal_Optimizer.service.AuthService;
-import com.example.MY_Goal_Optimizer.vo.LoginVO;
-import com.example.MY_Goal_Optimizer.vo.RegisterVO;
+import com.example.MY_Goal_Optimizer.vo.user.LoginVO;
+import com.example.MY_Goal_Optimizer.vo.user.RegisterVO;
 import com.example.MY_Goal_Optimizer.vo.ResultVO;
-import com.example.MY_Goal_Optimizer.vo.UserVO;
+import com.example.MY_Goal_Optimizer.vo.user.UserVO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
