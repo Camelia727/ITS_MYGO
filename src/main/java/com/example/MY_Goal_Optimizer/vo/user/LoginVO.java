@@ -1,4 +1,4 @@
-package com.example.MY_Goal_Optimizer.vo;
+package com.example.MY_Goal_Optimizer.vo.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

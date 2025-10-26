@@ -1,6 +1,6 @@
 package com.example.MY_Goal_Optimizer.service;
 
-import com.example.MY_Goal_Optimizer.vo.UserVO;
+import com.example.MY_Goal_Optimizer.vo.user.UserVO;
 
 public interface AuthService {
 

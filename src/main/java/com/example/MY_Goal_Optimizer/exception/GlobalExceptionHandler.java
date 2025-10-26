@@ -1,6 +1,8 @@
 package com.example.MY_Goal_Optimizer.exception;
 
 import com.example.MY_Goal_Optimizer.vo.ResultVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(RuntimeException.class)
     public ResultVO<?> handleRuntimeException(RuntimeException e) {
+        log.error("服务器错误，请稍后再试", e);
         return ResultVO.error(500, "服务器错误，请稍后再试");
     }
 

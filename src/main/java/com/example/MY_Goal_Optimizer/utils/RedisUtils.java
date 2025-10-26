@@ -126,7 +126,9 @@ public class RedisUtils {
         }
 
         try{
-            return redisTemplate.opsForValue().get(key);
+            Object o = redisTemplate.opsForValue().get(key);
+            System.out.println(o);
+            return o;
         } catch (Exception e){
             log.error("get key:{} error", key, e);
             return null;

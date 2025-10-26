@@ -8,11 +8,14 @@ import com.example.MY_Goal_Optimizer.service.AuthService;
 import com.example.MY_Goal_Optimizer.utils.Argon2Utils;
 import com.example.MY_Goal_Optimizer.utils.JwtUtils;
 import com.example.MY_Goal_Optimizer.utils.RedisUtils;
-import com.example.MY_Goal_Optimizer.vo.UserVO;
+import com.example.MY_Goal_Optimizer.vo.user.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+
+import static com.example.MY_Goal_Optimizer.constants.RedisKeyConstants.USER_INFO_EXPIRE_TIME;
+import static com.example.MY_Goal_Optimizer.constants.RedisKeyConstants.USER_INFO_PREFIX;
 
 /**
  * AuthServiceImpl
@@ -88,10 +91,8 @@ public class AuthServiceImpl implements AuthService {
      * @param userInfoCache 用户信息
      */
     private void cacheUserInfo(UserInfoCache userInfoCache) {
-        String USER_CACHE_PREFIX = "user:info:";
-        String cacheKey = USER_CACHE_PREFIX + userInfoCache.getId();
-        long USER_CACHE_EXPIRE_TIME = 60 * 60;  // 1 hour
-        redisUtils.setWithExpire(cacheKey, userInfoCache, USER_CACHE_EXPIRE_TIME);
+        String cacheKey = USER_INFO_PREFIX + userInfoCache.getId();
+        redisUtils.setWithExpire(cacheKey, userInfoCache, USER_INFO_EXPIRE_TIME);
     }
 
 }

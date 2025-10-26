@@ -34,8 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String uri = request.getRequestURI();
 
-        // 放行登录注册接口和健康检查端点
-        if (uri.startsWith("/api/auth") || uri.startsWith("/actuator/health")) {
+        if (uri.startsWith("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }

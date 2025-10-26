@@ -1,7 +1,7 @@
 package com.example.MY_Goal_Optimizer.po;
 
 import com.example.MY_Goal_Optimizer.po.converter.UserTypeConverter;
-import com.example.MY_Goal_Optimizer.vo.UserVO;
+import com.example.MY_Goal_Optimizer.vo.user.UserVO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;

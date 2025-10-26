@@ -3,6 +3,7 @@ package com.example.MY_Goal_Optimizer.utils;
 import com.example.MY_Goal_Optimizer.exception.TokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 
 import java.security.Key;
 import java.util.Date;
@@ -22,11 +23,11 @@ public class JwtUtils {
 
     // 解析token
     public static Claims parseToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET_KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+            return Jwts.parserBuilder()
+                    .setSigningKey(SECRET_KEY)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
     }
 
     // 从token中获取用户ID
@@ -50,6 +51,8 @@ public class JwtUtils {
         try {
             Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token);
             return true;
+        } catch (SignatureException e) {
+            throw new TokenException(401, "token无效！（签名错误）");
         } catch (MalformedJwtException e) {
             throw new TokenException(404, "token无效！（格式错误）");
         } catch (ExpiredJwtException e) {
