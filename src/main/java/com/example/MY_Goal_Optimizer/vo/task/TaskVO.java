@@ -1,6 +1,7 @@
 package com.example.MY_Goal_Optimizer.vo.task;
 
 import com.example.MY_Goal_Optimizer.po.Goal;
+import lombok.Data;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,9 +14,9 @@ import java.time.LocalDateTime;
  * @description
  * @date 2025/10/26 下午11:25
  */
-@Setter
+@Data
 public class TaskVO {
-    private Integer id;
+    private Long id;
     private String content;
     private Boolean completed;
     private LocalDateTime deadline;

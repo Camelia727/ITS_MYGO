@@ -2,7 +2,10 @@ package com.example.MY_Goal_Optimizer.vo.goal;
 
 import com.example.MY_Goal_Optimizer.po.User;
 import com.example.MY_Goal_Optimizer.vo.task.TaskVO;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.List;
  * @description
  * @date 2025/10/26 下午11:35
  */
-@Setter
+@Data
 public class GoalVO {
     private Long id;
     private String title;

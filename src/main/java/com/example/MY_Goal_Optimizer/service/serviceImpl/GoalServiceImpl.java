@@ -1,7 +1,9 @@
 package com.example.MY_Goal_Optimizer.service.serviceImpl;
 
 import com.example.MY_Goal_Optimizer.exception.AuthException;
+import com.example.MY_Goal_Optimizer.exception.RunException;
 import com.example.MY_Goal_Optimizer.po.Goal;
+import com.example.MY_Goal_Optimizer.po.User;
 import com.example.MY_Goal_Optimizer.repository.GoalRepository;
 import com.example.MY_Goal_Optimizer.repository.UserRepository;
 import com.example.MY_Goal_Optimizer.service.GoalService;
@@ -51,13 +53,18 @@ public class GoalServiceImpl implements GoalService {
 
     @Override
     public void createGoal(Long userId, String title, String description, String category, Integer priority, String deadline) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            throw new RunException(400, "用户不存在[id]");
+        }
+
         Goal goal = new Goal();
-        goal.setUser(userRepository.findById(userId).orElse(null));
+        goal.setUser(user);
         goal.setTitle(title);
         goal.setDescription(description);
         goal.setCategory(category);
         goal.setPriority(priority);
-        goal.setDeadline(LocalDateTime.parse(deadline, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        goal.setDeadline(LocalDateTime.parse(deadline));
         goalRepository.save(goal);
     }
 
@@ -68,13 +75,13 @@ public class GoalServiceImpl implements GoalService {
             throw new AuthException(404, "目标不存在[id]");
         }
 
-        if (!title.isEmpty()) {
+        if (title != null && !title.isEmpty()) {
             goal.setTitle(title);
         }
-        if (!description.isEmpty()) {
+        if (description != null && !description.isEmpty()) {
             goal.setDescription(description);
         }
-        if (!category.isEmpty()) {
+        if (category != null && !category.isEmpty()) {
             goal.setCategory(category);
         }
         if (status!= null) {
@@ -83,8 +90,8 @@ public class GoalServiceImpl implements GoalService {
         if (priority!= null) {
             goal.setPriority(priority);
         }
-        if (!deadline.isEmpty()) {
-            goal.setDeadline(LocalDateTime.parse(deadline, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        if (deadline != null && !deadline.isEmpty()) {
+            goal.setDeadline(LocalDateTime.parse(deadline));
         }
         goalRepository.save(goal);
     }

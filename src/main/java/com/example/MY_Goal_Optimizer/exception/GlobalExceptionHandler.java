@@ -44,10 +44,10 @@ public class GlobalExceptionHandler {
         return ResultVO.error(e.getCode(), e.getMessage());
     }
 
-//    // 内容异常
-//    @ExceptionHandler(ItemException.class)
-//    public ResultVO<?> handleItemException(ItemException e) {
-//        return ResultVO.error(e.getCode(), e.getMessage());
-//    }
+    // 运行异常
+    @ExceptionHandler(RunException.class)
+    public ResultVO<?> handleItemException(RunException e) {
+        return ResultVO.error(e.getCode(), e.getMessage());
+    }
 
 }

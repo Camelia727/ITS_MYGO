@@ -5,6 +5,7 @@ import com.example.MY_Goal_Optimizer.vo.ResultVO;
 import com.example.MY_Goal_Optimizer.vo.task.CreateTaskVO;
 import com.example.MY_Goal_Optimizer.vo.task.TaskVO;
 import com.example.MY_Goal_Optimizer.vo.task.UpdateTaskVO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,42 +26,46 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("/tasks")
-    public ResultVO<List<TaskVO>> getTasksByGoalId(Long goal_id) {
+    @GetMapping("/goal/{goal_id}")
+    public ResultVO<List<TaskVO>> getTasksByGoalId(@PathVariable Long goal_id) {
         return ResultVO.success(taskService.getTasksByGoalId(goal_id), null);
     }
 
-    @GetMapping("/task")
-    public ResultVO<TaskVO> getTaskById(Long task_id) {
+    @GetMapping("/task/{task_id}")
+    public ResultVO<TaskVO> getTaskById(@PathVariable Long task_id) {
         return ResultVO.success(taskService.getTaskById(task_id), null);
     }
 
     @PostMapping
-    public ResultVO<String> createTask(Long goal_id, CreateTaskVO createTaskVO) {
-        return ResultVO.success(taskService.createTask(
+    public ResultVO<String> createTask(@RequestBody @Valid CreateTaskVO createTaskVO) {
+        taskService.createTask(
                 createTaskVO.getGoalId(),
                 createTaskVO.getContent(),
                 createTaskVO.getDeadline()
-        ), null);
+        );
+        return ResultVO.success("创建成功", null);
     }
 
     @PutMapping
-    public ResultVO<String> updateTask(UpdateTaskVO updateTaskVO) {
-        return ResultVO.success(taskService.updateTask(
+    public ResultVO<String> updateTask(@RequestBody @Valid UpdateTaskVO updateTaskVO) {
+        taskService.updateTask(
                 updateTaskVO.getId(),
                 updateTaskVO.getContent(),
                 updateTaskVO.getDeadline()
-        ), null);
+        );
+        return ResultVO.success("更新成功", null);
     }
 
-    @DeleteMapping("/tasks")
-    public ResultVO<String> deleteTasksByGoalId(Long goal_id) {
-        return ResultVO.success(taskService.deleteTasksByGoalId(goal_id), null);
+    @DeleteMapping("/goal/{goal_id}")
+    public ResultVO<String> deleteTasksByGoalId(@PathVariable Long goal_id) {
+        taskService.deleteTasksByGoalId(goal_id);
+        return ResultVO.success("删除成功", null);
     }
 
-    @DeleteMapping("/task")
-    public ResultVO<String> deleteTaskById(Long task_id) {
-        return ResultVO.success(taskService.deleteTaskById(task_id), null);
+    @DeleteMapping("/task/{task_id}")
+    public ResultVO<String> deleteTaskById(@PathVariable Long task_id) {
+        taskService.deleteTaskById(task_id);
+        return ResultVO.success("删除成功", null);
     }
 
 }

@@ -8,14 +8,14 @@ public interface TaskService {
 
     List<TaskVO> getTasksByGoalId(Long goalId);
 
-    String createTask(Long goalId, String content, String deadline);
+    void createTask(Long goalId, String content, String deadline);
 
     TaskVO getTaskById(Long taskId);
 
-    String updateTask(Long taskId, String content, String deadline);
+    void updateTask(Long taskId, String content, String deadline);
 
-    String deleteTasksByGoalId(Long goalId);
+    void deleteTasksByGoalId(Long goalId);
 
-    String deleteTaskById(Long taskId);
+    void deleteTaskById(Long taskId);
 
 }
