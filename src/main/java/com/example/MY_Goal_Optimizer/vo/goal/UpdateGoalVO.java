@@ -1,5 +1,7 @@
 package com.example.MY_Goal_Optimizer.vo.goal;
 
+import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 /**
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
  * @description
  * @date 2025/10/26 下午11:56
  */
+@Getter
 public class UpdateGoalVO {
     private String id;
     private String title;
@@ -17,5 +20,5 @@ public class UpdateGoalVO {
     private String category;
     private Integer status;
     private Integer priority;
-    private LocalDateTime deadline;
+    private String deadline;
 }
