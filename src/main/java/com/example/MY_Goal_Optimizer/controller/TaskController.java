@@ -7,6 +7,7 @@ import com.example.MY_Goal_Optimizer.vo.task.TaskVO;
 import com.example.MY_Goal_Optimizer.vo.task.UpdateTaskVO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,6 +67,11 @@ public class TaskController {
     public ResultVO<String> deleteTaskById(@PathVariable Long task_id) {
         taskService.deleteTaskById(task_id);
         return ResultVO.success("删除成功", null);
+    }
+
+    // 从token获取用户ID（私有方法）
+    private Long getUserIdFromToken() {
+        return Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
     }
 
 }

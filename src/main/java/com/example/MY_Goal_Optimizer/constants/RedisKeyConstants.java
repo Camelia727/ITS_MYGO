@@ -10,7 +10,12 @@ package com.example.MY_Goal_Optimizer.constants;
  */
 public final class RedisKeyConstants {
 
+    // USER_INFO
     public static final String USER_INFO_PREFIX = "user_info_";
     public static final long USER_INFO_EXPIRE_TIME = 60 * 60 * 24; // 1 day
+
+    // TODAY_TASKS
+    public static final String TODAY_TASKS_PREFIX = "today_tasks_";
+    public static final long TODAY_TASKS_EXPIRE_TIME = 60 * 60; // 1 hour
 
 }

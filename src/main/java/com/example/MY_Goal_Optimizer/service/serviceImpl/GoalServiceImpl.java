@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * GoalServiceImpl
@@ -93,6 +93,20 @@ public class GoalServiceImpl implements GoalService {
         if (deadline != null && !deadline.isEmpty()) {
             goal.setDeadline(LocalDateTime.parse(deadline));
         }
+        goalRepository.save(goal);
+    }
+
+    @Override
+    public void updateGoalStatus(Long goalId, Integer status) {
+        Goal goal = goalRepository.findById(goalId).orElse(null);
+        if (goal == null) {
+            throw new RunException(404, "目标不存在[id]");
+        }
+        if (Objects.equals(status, goal.getStatus())) {
+            throw new RunException(400, "请设置不同的状态");
+        }
+
+        goal.setStatus(status);
         goalRepository.save(goal);
     }
 

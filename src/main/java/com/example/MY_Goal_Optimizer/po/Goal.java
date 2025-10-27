@@ -57,7 +57,6 @@ public class Goal {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "goal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Task> tasks;
 
     public GoalVO toVO() {

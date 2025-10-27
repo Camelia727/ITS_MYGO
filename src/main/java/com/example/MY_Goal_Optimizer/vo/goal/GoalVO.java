@@ -2,6 +2,10 @@ package com.example.MY_Goal_Optimizer.vo.goal;
 
 import com.example.MY_Goal_Optimizer.po.User;
 import com.example.MY_Goal_Optimizer.vo.task.TaskVO;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Setter;
@@ -26,8 +30,18 @@ public class GoalVO {
     private String category;
     private Integer status; // 1: active, 2: completed, 3: deleted
     private Integer priority;   // 1: high, 2: medium, 3: low
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime deadline;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updatedAt;
+
     private List<TaskVO> tasks;
 }

@@ -33,7 +33,7 @@ public class GoalController {
         return ResultVO.success(goalService.getGoals(userId), null);
     }
 
-    @GetMapping("/goal/{goalId}")
+    @GetMapping("/{goalId}")
     public ResultVO<GoalVO> getGoal(@PathVariable Long goalId) {
         return ResultVO.success(goalService.getGoal(goalId), null);
     }
@@ -47,6 +47,12 @@ public class GoalController {
     @PutMapping
     public ResultVO<String> updateGoal(@RequestBody @Valid UpdateGoalVO updateGoalVO) {
         goalService.updateGoal(updateGoalVO.getId(), updateGoalVO.getTitle(), updateGoalVO.getDescription(), updateGoalVO.getCategory(), updateGoalVO.getStatus(), updateGoalVO.getPriority(), updateGoalVO.getDeadline());
+        return ResultVO.success("更新成功", null);
+    }
+
+    @PutMapping("/status/{goalId}")
+    public ResultVO<String> updateGoalStatus(@PathVariable Long goalId, @RequestParam Integer status) {
+        goalService.updateGoalStatus(goalId, status);
         return ResultVO.success("更新成功", null);
     }
 
