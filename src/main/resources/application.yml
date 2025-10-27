@@ -24,5 +24,16 @@ spring:
   profiles:
     active: secret
 
+  jackson:
+    format:
+      date-format: yyyy-MM-dd'T'HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+  servlet:
+    encoding:
+      charset: UTF-8
+
 server:
   port: 8080
