@@ -15,6 +15,7 @@ public interface GoalService {
 
     void updateGoal(Long goalId, String title, String description, String category, Integer status, Integer priority, String deadline);
 
-    void deleteGoal(Long goalId);
+    void updateGoalStatus(Long goalId, Integer status);
 
+    void deleteGoal(Long goalId);
 }
