@@ -1,6 +1,8 @@
 package com.example.MY_Goal_Optimizer.repository;
 
 import com.example.MY_Goal_Optimizer.po.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -13,5 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // FIND
     Optional<User> findByAccount(String account);
+    Page<User> findAll(Pageable pageable);
 
 }

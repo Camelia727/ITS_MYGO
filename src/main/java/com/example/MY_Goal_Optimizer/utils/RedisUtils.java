@@ -69,6 +69,25 @@ public class RedisUtils {
     }
 
     /**
+     * 获取键集合
+     *
+     * @param pattern 匹配模式
+     * @return 键集合
+     */
+    public Set<String> keys(String pattern) {
+        if (pattern == null || pattern.trim().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        try {
+            return redisTemplate.keys(pattern);
+        } catch (Exception e) {
+            log.error("keys pattern:{} error", pattern, e);
+            return Collections.emptySet();
+        }
+    }
+
+    /**
      * 删除缓存
      *
      * @param keys 可以传一个值 或多个
@@ -308,6 +327,114 @@ public class RedisUtils {
         }
 
     }
+
+    //============================Set=========================
+
+    /**
+     * 向指定set中添加元素
+     *
+     * @param key key
+     * @param value value
+     * @return true成功 false失败
+     */
+    public boolean addSet(String key, String value) {
+        if (key == null || key.isEmpty() || value == null) {
+            return false;
+        }
+
+        try {
+            Long result = redisTemplate.opsForSet().add(key, value);
+            return result != null && result > 0;
+        } catch (Exception e) {
+            log.error("addSet key:{},value:{} error", key, value, e);
+            return false;
+        }
+    }
+
+
+    /**
+     * 获取指定set中的所有元素
+     *
+     * @param key key
+     * @return 结果
+     */
+    public Set<Object> getSet(String key) {
+        if (key == null || key.isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        try {
+            return redisTemplate.opsForSet().members(key);
+        } catch (Exception e) {
+            log.error("getSet key:{} error", key, e);
+            return Collections.emptySet();
+        }
+    }
+
+
+    /**
+     * 获取指定set中的元素个数
+     *
+     * @param key key
+     * @return 结果
+     */
+    public Long getSetSize(String key) {
+        if (key == null || key.isEmpty()) {
+            return 0L;
+        }
+
+        try {
+            return redisTemplate.opsForSet().size(key);
+        } catch (Exception e) {
+            log.error("getSetSize key:{} error", key, e);
+            return 0L;
+        }
+    }
+
+
+    /**
+     * 检查元素是否在指定set中
+     *
+     * @param key key
+     * @param value value
+     * @return true存在 false不存在
+     */
+    public boolean isMember(String key, String value) {
+        if (key == null || key.isEmpty() || value == null) {
+            return false;
+        }
+
+        try {
+            Boolean result = redisTemplate.opsForSet().isMember(key, value);
+            return Boolean.TRUE.equals(result);
+        } catch (Exception e) {
+            log.error("isMember key:{},value:{} error", key, value, e);
+            return false;
+        }
+    }
+
+
+    /**
+     * 移除指定set中的元素
+     *
+     * @param key key
+     * @param value value
+     * @return true成功 false失败
+     */
+    public boolean removeSet(String key, String value) {
+        if (key == null || key.isEmpty() || value == null) {
+            return false;
+        }
+
+        try {
+            Long result = redisTemplate.opsForSet().remove(key, value);
+            return result != null && result > 0;
+        } catch (Exception e) {
+            log.error("removeSet key:{},value:{} error", key, value, e);
+            return false;
+        }
+    }
+
 
     //============================Increment===================
 
